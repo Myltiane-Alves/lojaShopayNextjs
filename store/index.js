@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-const { combineReducers } = require("redux");
+import { combineReducers } from "redux";
 import thunk from "redux-thunk";
 import storage from "redux-persist/lib/storage";
 import { persistReducer } from "redux-persist";
