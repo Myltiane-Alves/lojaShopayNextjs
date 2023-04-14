@@ -54,7 +54,7 @@ export default function Top({ country }) {
 
                             <li className={styles.li}>
                                 <div className={styles.flex}>
-                                    <img src="/images/userAvatar.png" alt="avatar do usuário" />
+                                    <img src="/imagens/userAvatar.png" alt="avatar do usuário" />
                                     {/* <img src={session?.user?.image} alt="avatar do usuário" /> */}
                                     <span>Myltiane</span>
                                     <RiArrowDropDownFill />

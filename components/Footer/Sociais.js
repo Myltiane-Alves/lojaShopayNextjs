@@ -7,6 +7,7 @@ import {
     BsPinterest,
     BsSnapchat,
 } from "react-icons/bs";
+import Link from "next/link";
 
 export default function Socials() {
     return (
@@ -15,39 +16,39 @@ export default function Socials() {
                 <h3>PERMANEÇA CONECTADO</h3>
                 <ul>
                     <li>
-                        <a href="/" target="_blank">
+                        <Link href="/" target="_blank">
                             <FaFacebookF />
-                        </a>
+                        </Link>
                     </li>
                     <li>
-                        <a href="/" target="_blank">
+                        <Link href="/" target="_blank">
                             <BsInstagram />
-                        </a>
+                        </Link>
                     </li>
                     <li>
-                        <a href="/" target="_blank">
+                        <Link href="/" target="_blank">
                             <BsTwitter />
-                        </a>
+                        </Link>
                     </li>
                     <li>
-                        <a href="/" target="_blank">
+                        <Link href="/" target="_blank">
                             <BsYoutube />
-                        </a>
+                        </Link>
                     </li>
                     <li>
-                        <a href="/" target="_blank">
+                        <Link href="/" target="_blank">
                             <BsPinterest />
-                        </a>
+                        </Link>
                     </li>
                     <li>
-                        <a href="/" target="_blank">
+                        <Link href="/" target="_blank">
                             <BsSnapchat />
-                        </a>
+                        </Link>
                     </li>
                     <li>
-                        <a href="/" target="_blank">
+                        <Link href="/" target="_blank">
                             <FaTiktok />
-                        </a>
+                        </Link>
                     </li>
                 </ul>
             </section>
