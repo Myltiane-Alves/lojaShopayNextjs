@@ -4,8 +4,12 @@ import { BsSuitHeart } from "react-icons/bs";
 import { RiAccountPinCircleLine, RiArrowDropDownFill } from "react-icons/ri";
 import Link from 'next/link';
 import { useState } from 'react';
+import UserMenu from './UserMenu';
+// import { useSession } from 'next-auth/react';
+
 
 export default function Top({ country }) {
+    // const { data: session } = useSession();
     const [visible, setVisible] = useState(false);
     return (
         <div className={styles.top}>
@@ -13,8 +17,8 @@ export default function Top({ country }) {
                 <div></div>
                 <ul className={styles.top__list}>
                     <li className={styles.li}>
-                        <img src="/images/brasil.png" alt="bandeira do brasil" />
-                        <span> / Real</span>
+                        <img src="/imagens/brasil.png" alt="bandeira do brasil" />
+                        <span>Brasil / Real</span>
                     </li>
                     <li className={styles.li}>
                         <MdSecurity />
@@ -32,8 +36,12 @@ export default function Top({ country }) {
                             <span>Lista de Desejos</span>
                         </Link>
                     </li>
-                    <li  className={styles.li}>
-                        {session ? (
+                    <li  
+                        className={styles.li}
+                        onMouseOver={() => setVisible(true)}
+                        onMouseLeave={() => setVisible(false)}
+                    >
+                      
                             <li className={styles.li}>
                                 <div className={styles.flex}>
                                     <RiAccountPinCircleLine />
@@ -42,16 +50,18 @@ export default function Top({ country }) {
                                 </div>
                             </li>
 
-                        ) : ( 
+                    
 
                             <li className={styles.li}>
                                 <div className={styles.flex}>
                                     <img src="/images/userAvatar.png" alt="avatar do usuário" />
-                                    <span>Usuário</span>
+                                    {/* <img src={session?.user?.image} alt="avatar do usuário" /> */}
+                                    <span>Myltiane</span>
                                     <RiArrowDropDownFill />
                                 </div>
                             </li>
-                        )}
+                    
+                        {/* {visible && <UserMenu session={session} />} */}
                     </li>
                 </ul>
 
