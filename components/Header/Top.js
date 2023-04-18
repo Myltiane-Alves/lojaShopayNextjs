@@ -5,7 +5,6 @@ import { RiAccountPinCircleLine, RiArrowDropDownFill } from "react-icons/ri";
 import Link from 'next/link';
 import { useState } from 'react';
 import UserMenu from './UserMenu';
-// import { useSession } from 'next-auth/react';
 
 
 export default function Top({ country }) {
@@ -17,8 +16,9 @@ export default function Top({ country }) {
                 <div></div>
                 <ul className={styles.top__list}>
                     <li className={styles.li}>
-                        <img src="/imagens/brasil.png" alt="bandeira do brasil" />
-                        <span>Brasil / Real</span>
+                        {/* <img src="/imagens/brasil.png" alt="bandeira do brasil" /> */}
+                        <img src={country?.flag} alt="bandeira do brasil" />
+                        <span>{country?.name} / Real</span>
                     </li>
                     <li className={styles.li}>
                         <MdSecurity />
@@ -36,12 +36,12 @@ export default function Top({ country }) {
                             <span>Lista de Desejos</span>
                         </Link>
                     </li>
-                    <li  
+                    <li
                         className={styles.li}
                         onMouseOver={() => setVisible(true)}
                         onMouseLeave={() => setVisible(false)}
                     >
-                      
+                        {visible ? (
                             <li className={styles.li}>
                                 <div className={styles.flex}>
                                     <RiAccountPinCircleLine />
@@ -50,7 +50,7 @@ export default function Top({ country }) {
                                 </div>
                             </li>
 
-                    
+                        ) : ( 
 
                             <li className={styles.li}>
                                 <div className={styles.flex}>
@@ -60,7 +60,9 @@ export default function Top({ country }) {
                                     <RiArrowDropDownFill />
                                 </div>
                             </li>
-                    
+                        )}
+
+
                         {/* {visible && <UserMenu session={session} />} */}
                     </li>
                 </ul>
