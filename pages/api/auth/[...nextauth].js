@@ -1,9 +1,11 @@
-
 import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 import clientPromise from "./lib/mongodb";
 import bcrypt from "bcrypt";
 import db from '../../../utils/db';
-
+import TwitterProvider from "next-auth/providers/twitter";
+import FacebookProvider from "next-auth/providers/facebook";
+import GoogleProvider from "next-auth/providers/google";
+import GitHubProvider from "next-auth/providers/github";
 db.connectDb();
 export default NextAuth({
     adapter: MongoDBAdapter(clientPromise),
@@ -30,8 +32,11 @@ export default NextAuth({
             issuer: process.env.AUTH0_ISSUER,
         }),
     ],
+    callbacks: {
+
+    },
     pages: {
-        signIn: "/signin",
+        // signIn: "/signin",
       },
       session: {
         strategy: "jwt",

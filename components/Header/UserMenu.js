@@ -7,10 +7,10 @@ export default function UserMenu({ session }) {
       <h4>Bem-vindo ao ML Shop !</h4>
         {session ? (
           <div className={styles.flex}>
-            <img src="" alt="" className={styles.menu__img} />
+            <img src={session.user.image} alt="" className={styles.menu__img} />
             <div className={styles.col}>
               <span>Bem vindo de volta</span>
-              <h3>Nome</h3>
+              <h3>{session.user.nome}</h3>
               <span onClick={() => signOut()}>Sair</span>
             </div>
           </div>
