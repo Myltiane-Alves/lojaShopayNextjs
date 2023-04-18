@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { useState } from "react";
+import LoginInput from "@/components/inputs/loginInput";
 const initialvalues = {
     login_email: "",
     login_password: "",
@@ -21,6 +22,45 @@ const initialvalues = {
 export default function signin() {
     const [loading, setLoading] = useState(false);
     const [user, setUser] = useState(initialvalues);
+    const { 
+        login_email,
+        login_password, 
+        name,
+        email,
+        password,
+        conf_password,
+        success,
+        error,
+        login_error,
+    } = user;
+    const handleChange = (e) => {
+        const {name, value } = e.target;
+        setUser({...user, [name]: value})
+    };
+
+    const loginValidation=Yup.object({
+        login_email: Yup.string()
+            .email("Invalid email")
+            .required("Required"),
+        login_password: Yup.string().required("Required"),
+    });
+    const registerValidation=Yup.object({
+        email: Yup.string()
+            .email("Invalid email")
+            .required("Required"),
+        password: Yup.string().required("Required"),
+    });
+
+    const signUpHandler = async () => {
+        
+    }
+    const signInHandler = async () => {
+
+    }
+    const country = {
+        name: "",
+        flag: "",
+    }
     return (
         <>
             <Header />
@@ -47,7 +87,7 @@ export default function signin() {
                             }}
                             validationSchema={loginValidation}
                             onSubmit={() => {
-                                signInHandler();
+                                // signInHandler();
                             }}
                         >
                             {(form) => (
@@ -55,7 +95,7 @@ export default function signin() {
                                     <input
                                         type="hidden"
                                         name="csrfToken"
-                                        defaultValue={csrfToken}
+                                        // defaultValue={csrfToken}
                                     />
                                     <LoginInput
                                         type="text"
@@ -71,7 +111,7 @@ export default function signin() {
                                         placeholder="Password"
                                         onChange={handleChange}
                                     />
-                                    <CircledIconBtn type="submit" text="Sign in" />
+                                    {/* <CircledIconBtn type="submit" text="Sign in" /> */}
                                     {login_error && (
                                         <span className={styles.error}>{login_error}</span>
                                     )}
