@@ -7,6 +7,13 @@ import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { useState } from "react";
 import LoginInput from "@/components/inputs/loginInput";
+import CircledIconBtn from "@/components/buttons/circledIconBtn";
+import {
+    getCsrfToken,
+    getProviders,
+    getSession,
+    signIn,
+} from "next-auth/react";
 const initialvalues = {
     login_email: "",
     login_password: "",
@@ -19,12 +26,13 @@ const initialvalues = {
     login_error: "",
 };
 
-export default function signin() {
+export default function signin({ providers, csrfToken }) {
+    console.log(providers)
     const [loading, setLoading] = useState(false);
     const [user, setUser] = useState(initialvalues);
-    const { 
+    const {
         login_email,
-        login_password, 
+        login_password,
         name,
         email,
         password,
@@ -34,17 +42,17 @@ export default function signin() {
         login_error,
     } = user;
     const handleChange = (e) => {
-        const {name, value } = e.target;
-        setUser({...user, [name]: value})
+        const { name, value } = e.target;
+        setUser({ ...user, [name]: value })
     };
 
-    const loginValidation=Yup.object({
+    const loginValidation = Yup.object({
         login_email: Yup.string()
             .email("Invalid email")
             .required("Required"),
         login_password: Yup.string().required("Required"),
     });
-    const registerValidation=Yup.object({
+    const registerValidation = Yup.object({
         email: Yup.string()
             .email("Invalid email")
             .required("Required"),
@@ -52,7 +60,7 @@ export default function signin() {
     });
 
     const signUpHandler = async () => {
-        
+
     }
     const signInHandler = async () => {
 
@@ -84,10 +92,11 @@ export default function signin() {
                             initialValues={{
                                 login_email,
                                 login_password,
+
                             }}
                             validationSchema={loginValidation}
                             onSubmit={() => {
-                                // signInHandler();
+                                signInHandler();
                             }}
                         >
                             {(form) => (
@@ -95,7 +104,7 @@ export default function signin() {
                                     <input
                                         type="hidden"
                                         name="csrfToken"
-                                        // defaultValue={csrfToken}
+                                        defaultValue={csrfToken}
                                     />
                                     <LoginInput
                                         type="text"
@@ -111,20 +120,121 @@ export default function signin() {
                                         placeholder="Password"
                                         onChange={handleChange}
                                     />
-                                    {/* <CircledIconBtn type="submit" text="Sign in" /> */}
+                                    <CircledIconBtn type="submit" text="Sign in" />
                                     {login_error && (
                                         <span className={styles.error}>{login_error}</span>
                                     )}
                                     <div className={styles.forgot}>
-                                        <Link href="/auth/forgot">Forgot password ?</Link>
+                                        <Link href="/auth/forgot">Esqueceu sua Senha?</Link>
                                     </div>
                                 </Form>
                             )}
                         </Formik>
+                        <div className={styles.login__socials}>
+                            <span className={styles.or} >ou Continue com</span>
+                            <div className={styles.login__socials_wrap} >
+                                {providers.map((provider) => {
+                                    if (provider.name === "Credentials") {
+                                        return;
+                                    }
+                                    return (
+                                        <div key={provider.name}>
+                                            <button
+                                                className={styles.social__btn}
+                                                onClick={() => signIn(provider.id)}
+                                            >
+                                                <img src={`../../icons/${provider.name}.png`} alt="" />
+                                                Login com {provider.name}
+                                            </button>
+                                        </div>
+                                    )
+                                })}
+                            </div>
+                        </div>
+                        <div>
+                            {success && <span className={styles.success}>{success}</span>}
+                        </div>
+                        <div>{error && <span className={styles.error}>{error}</span>}</div>
+                    </div>
+                </div>
+                <div className={styles.login__container}>
+
+                    <div className={styles.login__form}>
+                        <h1>Inscreva-se</h1>
+                        <p>
+                            Tenha acesso a um dos melhores serviços de Compras do mundo.
+                        </p>
+                        <Formik
+                            enableReinitialize
+                            initialValues={{
+                                name,
+                                email,
+                                password,
+                                conf_password,
+
+                            }}
+                            validationSchema={loginValidation}
+                            onSubmit={() => {
+                                signInHandler();
+                            }}
+                        >
+                            {(form) => (
+                                <Form>
+                                    <LoginInput
+                                        type="text"
+                                        name="name"
+                                        icon="user"
+                                        placeholder="Full Name"
+                                        onChange={handleChange}
+                                    />
+                                    <LoginInput
+                                        type="text"
+                                        name="email"
+                                        icon="email"
+                                        placeholder="Email Address"
+                                        onChange={handleChange}
+                                    />
+                                    <LoginInput
+                                        type="password"
+                                        name="password"
+                                        icon="password"
+                                        placeholder="Password"
+                                        onChange={handleChange}
+                                    />
+                                    <LoginInput
+                                        type="password"
+                                        name="conf_password"
+                                        icon="password"
+                                        placeholder="Re-Type Password"
+                                        onChange={handleChange}
+                                    />
+                                    <CircledIconBtn type="submit" text="Sign up" />
+                                </Form>
+                            )}
+                        </Formik>
+                    
+                        <div>
+                            {success && <span className={styles.success}>{success}</span>}
+                        </div>
+                        <div>{error && <span className={styles.error}>{error}</span>}</div>
                     </div>
                 </div>
             </div>
             <Footer country="" />
         </>
     )
+}
+
+export async function getServerSideProps(context) {
+    const { req, query } = context;
+    // const csrfToken = await getCsrfToken(context);
+    // const providers = await getProviders();
+    const providers = Object.values(await getProviders());
+    // console.log(providers)
+    return {
+        props: {
+            providers,
+            // csrfToken 
+        }
+    }
 }
