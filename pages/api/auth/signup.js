@@ -4,6 +4,8 @@ import db from "@/utils/db";
 import User from "@/models/User";
 import { validateEmail } from '@/utils/validation';
 import { createActivationToken } from '@/utils/tokens';
+import { sendEmail } from '@/utils/sendEmails';
+import { activateEmailTemplate } from '@/emails/activateEmailTemplate';
 
 const handler = nc()
 
@@ -35,10 +37,10 @@ handler.post(async (req, res) => {
         });
         console.log(activitaion_token)
         const url = `${process.env.BASE_URL}/activate/${activitaion_token}`;
-        // sendEmail(email, url, "", "Activate your account.", activateEmailTemplate);
+        sendEmail(email, url, "", "Ative sua conta.", activateEmailTemplate);
         await db.disconnectDb();
         res.json({
-            message: "Register success! Please activate your email to start."
+            message: "Registre o sucesso! Por favor, ative seu e-mail para começar."
         });
     } catch(error) {
         res.status(500).json({ message: error.message })
