@@ -14,6 +14,9 @@ import {
     getSession,
     signIn,
 } from "next-auth/react";
+import { FaLastfmSquare } from "react-icons/fa";
+import Router  from "next/router";
+import DotLoaderSpinner from "@/components/loaders/dotLoader";
 const initialvalues = {
     login_email: "",
     login_password: "",
@@ -26,7 +29,7 @@ const initialvalues = {
     login_error: "",
 };
 
-export default function signin({ providers, csrfToken }) {
+export default function signin({ providers, callbackUrl, csrfToken }) {
     console.log(providers)
     const [loading, setLoading] = useState(false);
     const [user, setUser] = useState(initialvalues);
@@ -54,38 +57,75 @@ export default function signin({ providers, csrfToken }) {
     });
     const registerValidation = Yup.object({
         name: Yup.string()
-      .required("What's your name ?")
-      .min(2, "First name must be between 2 and 16 characters.")
-      .max(16, "First name must be between 2 and 16 characters.")
-      .matches(/^[aA-zZ]/, "Numbers and special characters are not allowed."),
-    email: Yup.string()
-      .required(
-        "You'll need this when you log in and if you ever need to reset your password."
-      )
-      .email("Enter a valid email address."),
-    password: Yup.string()
-      .required(
-        "Enter a combination of at least six numbers,letters and punctuation marks(such as ! and &)."
-      )
-      .min(6, "Password must be atleast 6 characters.")
-      .max(36, "Password can't be more than 36 characters"),
-    conf_password: Yup.string()
-      .required("Confirm your password.")
-      .oneOf([Yup.ref("password")], "Passwords must match."),
+            .required("What's your name ?")
+            .min(2, "First name must be between 2 and 16 characters.")
+            .max(16, "First name must be between 2 and 16 characters.")
+            .matches(/^[aA-zZ]/, "Numbers and special characters are not allowed."),
+        email: Yup.string()
+            .required(
+                "You'll need this when you log in and if you ever need to reset your password."
+            )
+            .email("Enter a valid email address."),
+        password: Yup.string()
+            .required(
+                "Enter a combination of at least six numbers,letters and punctuation marks(such as ! and &)."
+            )
+            .min(6, "Password must be atleast 6 characters.")
+            .max(36, "Password can't be more than 36 characters"),
+        conf_password: Yup.string()
+            .required("Confirm your password.")
+            .oneOf([Yup.ref("password")], "Passwords must match."),
     });
 
     const signUpHandler = async () => {
-
+        try {
+            setLoading(true);
+            const { data } = await axios.post("/api/auth/signup", {
+                name,
+                email,
+                password
+            });
+            setUser({ ...user, error: "", success: data.message });
+            setLoading(false);
+            setTimeout(async () => {
+                let options = {
+                    redirect: false,
+                    email: email,
+                    password: password
+                }
+                const res = await signIn("credentials", options);
+                Router.push("/")
+            }, 2000);
+        } catch(error) {
+            setLoading(false);
+            setUser({ ...user, success: "", error: error.response.data.message });
+        }
     }
     const signInHandler = async () => {
+        setLoading(true);
+        let options = {
+            redirect: false,
+            email: login_email,
+            password: login_password
+        };
+        const res = await signIn("credentials", options);
+        setUser({ ...user, success: "", error: ""})
+        setLoading(false);
+        if(res?.error) {
+            setLoading(false);
+            setUser({ ...user, login_error: res?.error });
+        } else {
+            return Router.push(callbackUrl || "/")
+        }
 
     }
     const country = {
-        name: "",
+        name: "Brasil",
         flag: "",
     }
     return (
         <>
+            {loading && <DotLoaderSpinner loading={loading} />}
             <Header />
             <div className={styles.login}>
                 <div className={styles.login__container}>
@@ -102,7 +142,7 @@ export default function signin({ providers, csrfToken }) {
                         <p>
                             Tenha acesso a um dos melhores serviços de Compras do mundo.
                         </p>
-                        <Formik
+                        <Formik 
                             enableReinitialize
                             initialValues={{
                                 login_email,
@@ -186,7 +226,6 @@ export default function signin({ providers, csrfToken }) {
                                 email,
                                 password,
                                 conf_password,
-
                             }}
                             validationSchema={loginValidation}
                             onSubmit={() => {
@@ -227,7 +266,7 @@ export default function signin({ providers, csrfToken }) {
                                 </Form>
                             )}
                         </Formik>
-                    
+
                         <div>
                             {success && <span className={styles.success}>{success}</span>}
                         </div>
@@ -235,21 +274,32 @@ export default function signin({ providers, csrfToken }) {
                     </div>
                 </div>
             </div>
-            <Footer country="" />
+            <Footer country="Brasil" />
         </>
     )
 }
 
 export async function getServerSideProps(context) {
     const { req, query } = context;
-    // const csrfToken = await getCsrfToken(context);
-    // const providers = await getProviders();
+    const session = await getSession({ req })
+    const { callbackUrl } = query;
+
+    if(session) {
+        return {
+            redirect: {
+                destination: callbackUrl
+            }
+        }
+    }
+
+    const csrfToken = await getCsrfToken(context);
     const providers = Object.values(await getProviders());
     // console.log(providers)
     return {
         props: {
             providers,
-            // csrfToken 
+            csrfToken,
+            callbackUrl 
         }
     }
 }
