@@ -51,7 +51,7 @@ export default function forget() {
               <BiLeftArrowAlt />
             </div>
             <span>
-              Forgot your password ? <Link href="/">Login instead</Link>
+              Esqueceu sua senha ?  <Link href="/">Fazer Login </Link>
             </span>
           </div>
           <Formik
@@ -74,7 +74,7 @@ export default function forget() {
                   onChange={(e) => setEmail(e.target.value)}
                 />
 
-                <CircledIconBtn type="submit" text="Send link" />
+                <CircledIconBtn type="submit" text="Enviar link" />
                 <div style={{ marginTop: "10px" }}>
                   {error && <span className={styles.error}>{error}</span>}
                   {success && <span className={styles.success}>{success}</span>}
