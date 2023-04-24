@@ -455,58 +455,58 @@ export const women_accessories = [
 
 export const women_swiper = [
   {
-    name: "HARRY POTTER | SHEIN Checkered & Snake Pattern Sweater Vest Without Blouse",
+    name: "HARRY POTTER | SHEIN Suéter com estampa xadrez e cobra sem blusa",
     image:
       "https://img.ltwebstatic.com/images3_pi/2022/06/21/1655799794344eb21cae76cf679de869f6b6e41229_thumbnail_600x.webp",
-    price: "103",
+    price: "103,00",
   },
   {
-    name: "Blazer manches cape à bouton",
+    name: "Blazer manches capa",
     image:
       "https://img.ltwebstatic.com/images3_pi/2022/09/13/1663060175905a8d4a3995fd5bc4c4827114c4b070_thumbnail_900x.webp",
-    price: "58",
+    price: "58,90",
   },
   {
     name: "SHEIN X Zhihan Wang Sweat-shirt dessin animé et slogan",
     image:
       "https://img.ltwebstatic.com/images3_pi/2022/09/29/1664415954a61747c30c7e9576fd4374354dad4b54_thumbnail_900x.webp",
-    price: "12.99",
+    price: "12,99",
   },
   {
-    name: "ROMWE Grunge Punk Sweat-shirt à capuche à imprimé lettre et graphique à cordon",
+    name: "Camisola ROMWE Grunge Punk com capuz e estampado com letras e grafismos com cordão",
     image:
       "https://img.ltwebstatic.com/images3_pi/2022/09/14/166312290414845f283801744986928b2d3dd8d2a9_thumbnail_405x552.webp",
-    price: "396",
+    price: "396,90",
   },
   {
-    name: "15pcs Gemstone & Rhinestone Decor Ring",
+    name: "15 peças anel decorativo de pedras preciosas",
     image:
       "https://img.ltwebstatic.com/images3_pi/2022/08/24/16613054802b93849c39b4b566941f1b5ebe9a1626_thumbnail_600x.webp",
-    price: "5.31",
+    price: "5,55",
   },
   {
-    name: "5pcs Halloween Pumpkin & Ghost Design Shoe Decoration",
+    name: "5 peças de decoração de sapato com desenho de fantasma e abóbora de Halloween",
     image:
       "https://img.ltwebstatic.com/images3_pi/2022/08/18/166082359241270ee7699993abcaefaad6fdedcfc2_thumbnail_600x.webp",
-    price: "79.25",
+    price: "79,99",
   },
   {
-    name: "10pcs Solid Hair Band",
+    name: "10 peças de faixa de cabelo sólida ",
     image:
       "https://img.ltwebstatic.com/images3_pi/2022/07/11/16575212726da2c7d3a0580bc5cfcfeb153d622924_thumbnail_600x.webp",
-    price: "3.69",
+    price: "3,89",
   },
   {
-    name: "Rhinestone Decor Bracelet With Ring",
+    name: "Pulseira decorativa com strass com anel",
     image:
       "https://img.ltwebstatic.com/images3_pi/2021/07/30/1627631651e33bb2d80d523abbcc83e3e18a43e76a_thumbnail_600x.webp",
-    price: "12.5",
+    price: "12,50",
   },
   {
-    name: "Colorful Leaf Print Pocket Front Backpack",
+    name: "Mochila frontal colorida com estampa de folhas",
     image:
       "https://img.ltwebstatic.com/images3_pi/2022/05/27/16536468000ce423c3ae45c06b70ae48ef8c78ecde_thumbnail_405x552.webp",
-    price: "11.58",
+    price: "105,90",
   },
 ];
 
