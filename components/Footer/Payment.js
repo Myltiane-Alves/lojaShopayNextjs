@@ -3,7 +3,7 @@ import styles from "./styles.module.scss";
 export default function Payment() {
   return (
     <div className={styles.footer__payment}>
-      <h3>WE ACCPET</h3>
+      <h3>Nós Aceitamos</h3>
       <div className={styles.footer__flexwrap}>
         <img src="../../../imagens/payment/visa.webp" alt="" />
         <img src="../../../imagens/payment/mastercard.webp" alt="" />

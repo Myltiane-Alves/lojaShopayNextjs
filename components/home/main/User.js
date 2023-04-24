@@ -20,7 +20,7 @@ export default function User() {
   return (
     <div className={styles.user}>
       <img
-        src="../../../images/userHeader.jpg"
+        src="../../../imagens/userHeader.jpg"
         alt=""
         className={styles.user__header}
       />
@@ -45,30 +45,30 @@ export default function User() {
         <ul className={styles.user__links}>
           <li>
             <Link href="/profile">
-
-              <IoSettingsOutline />
-
+              <span>
+                <IoSettingsOutline />
+              </span>
             </Link>
           </li>
           <li>
             <Link href="">
-
-              <HiOutlineClipboardList />
-
+              <span>
+                <HiOutlineClipboardList />
+              </span>
             </Link>
           </li>
           <li>
             <Link href="">
-
-              <AiOutlineMessage />
-
+              <span>
+                <AiOutlineMessage />
+              </span>
             </Link>
           </li>
           <li>
             <Link href="">
-
-              <BsHeart />
-
+              <span>
+                <BsHeart />
+              </span>
             </Link>
           </li>
         </ul>
@@ -101,7 +101,7 @@ export default function User() {
         </div>
       </div>
       <img
-        src="../../../images/userHeader.jpg"
+        src="../../../imagens/userHeader.jpg"
         alt=""
         className={styles.user__footer}
       />

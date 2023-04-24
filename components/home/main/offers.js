@@ -17,9 +17,9 @@ export default function Offers() {
     <div className={styles.offers}>
       <div className={styles.offers__text}>
         <p>
-         use cupom <b>“M&L”</b> 30% de desconto em todos os produtos.
+         use cupom <b>“Desc”</b> 30% de desconto em todos os produtos.
         </p>
-        <Link href="/browse">Shop now</Link>
+        <Link href="/browse">Compre agora</Link>
       </div>
       <Swiper
         slidesPerView={3}
@@ -36,7 +36,7 @@ export default function Offers() {
             <Link href="">
               <img src={offer.image} alt="" />
             </Link>
-            <span>{offer.price}$</span>
+            <span>{offer.price} R$</span>
             <span>-{offer.discount}%</span>
           </SwiperSlide>
         ))}
