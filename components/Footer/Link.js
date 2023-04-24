@@ -24,18 +24,18 @@ export default function Links() {
 
 const links = [
     {
-        heading: "SHOPPAY",
+        heading: "M&L Loja",
         links: [
             {
-                name: "About us",
+                name: "Sobre",
                 link: "",
             },
             {
-                name: "Contact us",
+                name: "Contato",
                 link: "",
             },
             {
-                name: "Social Responsibility",
+                name: "Responsabilidade social",
                 link: "",
             },
             {
@@ -45,47 +45,47 @@ const links = [
         ],
     },
     {
-        heading: "HELP & SUPPORT",
+        heading: "AJUDA E SUPORTE ",
         links: [
             {
-                name: "Shipping Info",
+                name: "Informação de Envio",
                 link: "",
             },
             {
-                name: "Returns",
+                name: "Devoluções",
                 link: "",
             },
             {
-                name: "How To Order",
+                name: "Como pedir",
                 link: "",
             },
             {
-                name: "How To Track",
+                name: "Como rastrear",
                 link: "",
             },
             {
-                name: "Size Guide",
+                name: "Guia de tamanho",
                 link: "",
             },
         ],
     },
     {
-        heading: "Customer service",
+        heading: "Atendimento ao Cliente",
         links: [
             {
-                name: "Customer service",
+                name: "Atendimento ao Cliente",
                 link: "",
             },
             {
-                name: "Terms and Conditions",
+                name: "Termos e Condições",
                 link: "",
             },
             {
-                name: "Consumers (Transactions)",
+                name: "Consumidores (Transações)",
                 link: "",
             },
             {
-                name: "Take our feedback survey",
+                name: "Responda à nossa pesquisa de feedback",
                 link: "",
             },
         ],

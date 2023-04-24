@@ -5,7 +5,7 @@ export default function Copyright({ country }) {
   // console.log(country)
   return (
     <div className={styles.footer__copyright}>
-      <section>©2023 ML SHOPPAY Todos os direitos Reservados.</section>
+      <section>©2023 M&L Loja Todos os direitos Reservados.</section>
       <section>
         <ul>
           {data.map((link, index) => (

@@ -9,7 +9,7 @@ import { useSession } from 'next-auth/react'
 
 export default function Top({ country }) {
     const { data: session } = useSession();
-    console.log(session)
+    // console.log(session)
     const [visible, setVisible] = useState(false);
     return (
         <div className={styles.top}>
