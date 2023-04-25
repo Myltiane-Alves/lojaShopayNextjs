@@ -33,7 +33,7 @@ export default function MainSwiper() {
       >
         {[...Array(10).keys()].map((i) => (
           <SwiperSlide>
-            {console.log(i)}
+            
             <img
               src={`../../../imagens/swiper/${i + 1}.jpg`} 
               alt="" 

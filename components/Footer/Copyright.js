@@ -2,7 +2,7 @@ import Link from "next/link";
 import styles from "./styles.module.scss";
 import { IoLocationSharp } from "react-icons/io5";
 export default function Copyright({ country }) {
-  // console.log(country)
+ 
   return (
     <div className={styles.footer__copyright}>
       <section>©2023 M&L Loja Todos os direitos Reservados.</section>
@@ -10,7 +10,7 @@ export default function Copyright({ country }) {
         <ul>
           {data.map((link, index) => (
             <li key={link.id}>
-              {/* {console.log(link)} */}
+           
               <Link href={link.link}>{link.name}</Link>
             </li>
           ))}

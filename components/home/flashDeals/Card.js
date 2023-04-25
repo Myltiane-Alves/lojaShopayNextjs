@@ -15,7 +15,6 @@ export default function FlashCard({ product }) {
             </div>
             <div className={styles.card__price}>
                 <span>R$  {(product.price - product.price / product.discount).toFixed(2)}</span>
-                {/* <span>R$  {console.log((product.price - product.discount ))}</span> */}
                 <span>R$ {(product.price  - (product.price  / product.discount)).toFixed(2)}</span>
             </div>
             <div className={styles.card__bar}>

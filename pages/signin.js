@@ -30,7 +30,7 @@ const initialvalues = {
 };
 
 export default function signin({ providers, callbackUrl, csrfToken }) {
-    console.log(providers)
+    
     const [loading, setLoading] = useState(false);
     const [user, setUser] = useState(initialvalues);
     const {
@@ -294,7 +294,7 @@ export async function getServerSideProps(context) {
 
     const csrfToken = await getCsrfToken(context);
     const providers = Object.values(await getProviders());
-    // console.log(providers)
+    
     return {
         props: {
             providers,
