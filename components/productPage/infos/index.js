@@ -8,6 +8,8 @@ import { BsHandbagFill, BsHeart } from "react-icons/bs";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { useSession } from "next-auth/react";
+import Share from "../share";
+import Accordian from "./Accordian";
 
 
 
@@ -143,6 +145,8 @@ export default function Infos({ product, setActiveImg }) {
                 </div>
                 {error && <span className={styles.error}>{error}</span>}
                 {success && <span className={styles.success}>{success}</span>}
+                <Share />
+                <Accordian details={[product.description, ...product.details]} />
             </div>
         </div>
     )
