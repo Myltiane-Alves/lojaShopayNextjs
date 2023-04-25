@@ -8,6 +8,7 @@ import Head from "next/head";
 import Header from "@/components/Header";
 import { useState } from "react";
 import MainSwiper from "@/components/productPage/mainSwiper";
+import Infos from "@/components/productPage/infos";
 
 export default function product({ product, related }) {
     const [activeImg, setActiveImg] = useState("");
@@ -25,16 +26,16 @@ export default function product({ product, related }) {
                 <div className={styles.product__container}>
                     <div className={styles.path}>
                         Home / {product.category.name}
-                        {product.subCategories.map((sub) => ( 
+                        {product.subCategories.map((sub) => (
                             <span> / {sub.name}</span>
                         ))}
                     </div>
                     <div className={styles.product__main}>
-                            <MainSwiper
-                                images={product.images}
-                                activeImg={activeImg}
-                            />
-                            {/* <Infos product={product} setActiveImg={setActiveImg} /> */}
+                        <MainSwiper
+                            images={product.images}
+                            activeImg={activeImg}
+                        />
+                        <Infos product={product} setActiveImg={setActiveImg} />
                     </div>
 
                 </div>
@@ -52,11 +53,11 @@ export async function getServerSideProps(context) {
     db.connectDb();
 
     let product = await Product.findOne({ slug })
-    
-    .populate({ path: "category", model: Category })
-    .populate({ path: "subCategories", model: SubCategory })
-    .populate({ path: "reviews.reviewBy", model: User })
-    .lean();
+
+        .populate({ path: "category", model: Category })
+        .populate({ path: "subCategories", model: SubCategory })
+        .populate({ path: "reviews.reviewBy", model: User })
+        .lean();
     let subProduct = product.subProducts[style];
     let prices = subProduct.sizes
         .map((s) => {
@@ -67,26 +68,46 @@ export async function getServerSideProps(context) {
         });
     let newProduct = {
         ...product,
-        style, 
+        style,
         images: subProduct.images,
         sizes: subProduct.sizes,
         discount: subProduct.discount,
         sku: subProduct.sku,
         colors: product.subProducts.map((p) => {
-            return p.colors;
+            return p.color;
         }),
-        priceRange: 
-            prices.lenght > 1 
-                ? `From ${prices[0]} to ${prices[prices.lenght - 1]}R$`
-                : "",
-            price:
-                subProduct.discount > 0
-                    ? (subProduct.sizes[size].price -
-                        subProduct.sizes[size].price / subProduct.discount
-                    ).toFixed(2)
-                    :   subProduct.sizes[size].price,
-            priceBefore: subProduct.sizes[size].price,
-            quantity: subProduct.sizes[size].qty,
+        priceRange: subProduct.discount
+            ? `De ${(prices[0] - prices[0] / subProduct.discount).toFixed(2)} por ${(
+                prices[prices.length - 1] -
+                prices[prices.length - 1] / subProduct.discount
+            ).toFixed(2)}$`
+            : `De ${prices[0]} por ${prices[prices.lenght - 1]}R$`,
+        price:
+            subProduct.discount > 0
+                ? (
+                    subProduct.sizes[size].price -
+                    subProduct.sizes[size].price / subProduct.discount
+                ).toFixed(2)
+                : subProduct.sizes[size].price,
+        priceBefore: subProduct.sizes[size].price,
+        quantity: subProduct.sizes[size].qty,
+        // ratings: [
+        //     {
+        //       percentage: calculatePercentage("5"),
+        //     },
+        //     {
+        //       percentage: calculatePercentage("4"),
+        //     },
+        //     {
+        //       percentage: calculatePercentage("3"),
+        //     },
+        //     {
+        //       percentage: calculatePercentage("2"),
+        //     },
+        //     {
+        //       percentage: calculatePercentage("1"),
+        //     },
+        // ],
     }
     db.disconnectDb();
     return {
