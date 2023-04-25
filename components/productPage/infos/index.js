@@ -8,8 +8,9 @@ import { BsHandbagFill, BsHeart } from "react-icons/bs";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { useSession } from "next-auth/react";
-import Share from "../share";
+import Share from "./share";
 import Accordian from "./Accordian";
+import SimillarSwiper from "./SimillarSwiper";
 
 
 
@@ -147,6 +148,7 @@ export default function Infos({ product, setActiveImg }) {
                 {success && <span className={styles.success}>{success}</span>}
                 <Share />
                 <Accordian details={[product.description, ...product.details]} />
+                <SimillarSwiper />
             </div>
         </div>
     )

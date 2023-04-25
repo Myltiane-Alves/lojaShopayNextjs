@@ -5,6 +5,7 @@ import MuiAccordion from "@mui/material/Accordion";
 import MuiAccordionSummary from "@mui/material/AccordionSummary";
 import MuiAccordionDetails from "@mui/material/AccordionDetails";
 import styles from "./styles.module.scss";
+import { useState } from "react";
 const Accordion = styled((props) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
 ))(({ theme }) => ({
@@ -43,7 +44,7 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
 }));
 
 export default function Accordian({ details }) {
-  const [expanded, setExpanded] = React.useState("");
+  const [expanded, setExpanded] = useState("");
   const handleChange = (panel) => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
   };

@@ -9,6 +9,7 @@ import Header from "@/components/Header";
 import { useState } from "react";
 import MainSwiper from "@/components/productPage/mainSwiper";
 import Infos from "@/components/productPage/infos";
+import Reviews from "@/components/productPage/reviews";
 
 export default function product({ product, related }) {
     const [activeImg, setActiveImg] = useState("");
@@ -37,7 +38,7 @@ export default function product({ product, related }) {
                         />
                         <Infos product={product} setActiveImg={setActiveImg} />
                     </div>
-
+                    <Reviews product={product} />
                 </div>
             </div>
         </>
@@ -91,23 +92,23 @@ export async function getServerSideProps(context) {
                 : subProduct.sizes[size].price,
         priceBefore: subProduct.sizes[size].price,
         quantity: subProduct.sizes[size].qty,
-        // ratings: [
-        //     {
-        //       percentage: calculatePercentage("5"),
-        //     },
-        //     {
-        //       percentage: calculatePercentage("4"),
-        //     },
-        //     {
-        //       percentage: calculatePercentage("3"),
-        //     },
-        //     {
-        //       percentage: calculatePercentage("2"),
-        //     },
-        //     {
-        //       percentage: calculatePercentage("1"),
-        //     },
-        // ],
+        ratings: [
+            // {
+            //   percentage: calculatePercentage("5"),
+            // },
+            // {
+            //   percentage: calculatePercentage("4"),
+            // },
+            // {
+            //   percentage: calculatePercentage("3"),
+            // },
+            // {
+            //   percentage: calculatePercentage("2"),
+            // },
+            // {
+            //   percentage: calculatePercentage("1"),
+            // },
+        ],
     }
     db.disconnectDb();
     return {
