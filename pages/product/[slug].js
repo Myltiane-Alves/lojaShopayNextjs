@@ -32,10 +32,7 @@ export default function product({ product, related }) {
                         ))}
                     </div>
                     <div className={styles.product__main}>
-                        <MainSwiper
-                            images={product.images}
-                            activeImg={activeImg}
-                        />
+                        <MainSwiper images={product.images} activeImg={activeImg}/>
                         <Infos product={product} setActiveImg={setActiveImg} />
                     </div>
                     <Reviews product={product} />
@@ -93,22 +90,34 @@ export async function getServerSideProps(context) {
         priceBefore: subProduct.sizes[size].price,
         quantity: subProduct.sizes[size].qty,
         ratings: [
-            // {
-            //   percentage: calculatePercentage("5"),
-            // },
-            // {
-            //   percentage: calculatePercentage("4"),
-            // },
-            // {
-            //   percentage: calculatePercentage("3"),
-            // },
-            // {
-            //   percentage: calculatePercentage("2"),
-            // },
-            // {
-            //   percentage: calculatePercentage("1"),
-            // },
+            {
+              percentage: 76
+            },
+            {
+              percentage: 50,
+            },
+            {
+              percentage: 30,
+            },
+            {
+              percentage: 10,
+            },
+            {
+              percentage: 0,
+            },
         ],
+        allSizes: product.subProducts
+            .map((p) => {
+                return p.sizes;
+            })
+            .flat()
+            .sort((a,b) => {
+                return a.size - b.size;
+            })
+            .filter(
+                (element, index, array) =>
+                    array.findIndex((el2) => el2.size === element.size) === index
+            ),       
     }
     db.disconnectDb();
     return {

@@ -2,6 +2,8 @@ import styles from "./styles.module.scss";
 import { Rating } from "@mui/material";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
+import AddReview from "./AddReview";
+import Table from "./Table";
 
 export default function Reviews({ product }) {
     const { data: session } = useSession();
@@ -25,34 +27,39 @@ export default function Reviews({ product }) {
                             {product.rating == 0 ? "Nenhuma revisão ainda. " : product.rating}
                         </div>
                     </div>
-                </div>
-                <div className={styles.reviews__stats_reviews}>
-                    {product.ratings.map((rating, i) => (
-                        <div className={styles.reviews__stats_reviews_review}>
-                            <Rating
-                                name="half-rating-read"
-                                defaultValue={5 - i}
-                                readOnly
-                                style={{ color: "#FACF19" }}
-                            />
-                            <div className={styles.bar}>
-                                <div
-                                    className={styles.bar__inner}
-                                    style={{ width: `${rating.percentage}%` }}
-                                ></div>
+                    <div className={styles.reviews__stats_reviews}>
+                        {product.ratings.map((rating, i) => (
+                            <div className={styles.reviews__stats_reviews_review}>
+                                <Rating
+                                    name="half-rating-read"
+                                    defaultValue={5 - i}
+                                    readOnly
+                                    style={{ color: "#FACF19" }}
+                                />
+                                <div className={styles.bar}>
+                                    <div
+                                        className={styles.bar__inner}
+                                        style={{ width: `${rating.percentage}%` }}
+                                    ></div>
+                                </div>
+                                <span>{rating.percentage}%</span>
                             </div>
-                            <span>{rating.percentage}%</span>
-                        </div>
-                    ))}
+                        ))}
+                    </div>
                 </div>
+                {session ? (
+                    <AddReview product={product} setReviews={setReviews} />
+                ) : (
+                    <button onClick={() => signIn()} className={styles.login_btn}>
+                        Faça login para adicionar avaliação
+                    </button>
+                )}
+                <Table
+                    reviews={reviews}
+                    allSizes={product.allSizes}
+                    colors={product.colors}
+                />
             </div>
-            {session ? (
-                <div> </div>
-            ) : (
-                <button onClick={() => signIn()} className={styles.login_btn}>
-                    Faça login para adicionar avaliação
-                </button>
-            )}
         </div >
     )
 }
