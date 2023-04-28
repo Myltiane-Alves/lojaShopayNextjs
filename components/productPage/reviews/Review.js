@@ -3,6 +3,7 @@ import styles from "./styles.module.scss";
 import { AiOutlineLike } from "react-icons/ai";
 export default function Review({ review }) {
     const { name, image } = review.reviewBy;
+    console.log(review);
     return (
         <div className={styles.review}>
             <div className={styles.flex}>

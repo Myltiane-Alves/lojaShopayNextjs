@@ -11,8 +11,9 @@ import MainSwiper from "@/components/productPage/mainSwiper";
 import Infos from "@/components/productPage/infos";
 import Reviews from "@/components/productPage/reviews";
 
-export default function product({ product, related }) {
+export default function product({ product, products, related }) {
     const [activeImg, setActiveImg] = useState("");
+
     const country = {
         name: "Brasil",
         flag: "https://cdn-icons-png.flaticon.com/512/197/197551.png?w=360",
@@ -54,7 +55,7 @@ export async function getServerSideProps(context) {
 
         .populate({ path: "category", model: Category })
         .populate({ path: "subCategories", model: SubCategory })
-        .populate({ path: "reviews.reviewBy", model: User })
+        .populate({ path: "reviews", model: User })
         .lean();
     let subProduct = product.subProducts[style];
     let prices = subProduct.sizes
@@ -106,6 +107,7 @@ export async function getServerSideProps(context) {
               percentage: 0,
             },
         ],
+        reviews: product.reviews.reverse(),
         allSizes: product.subProducts
             .map((p) => {
                 return p.sizes;
@@ -119,10 +121,26 @@ export async function getServerSideProps(context) {
                     array.findIndex((el2) => el2.size === element.size) === index
             ),       
     }
+    const related = await Product.find({ category: product.category._id }).lean();
+    //------------
+    function calculatePercentage(num) {
+      return (
+        (product.reviews.reduce((a, review) => {
+          return (
+            a +
+            (review.rating == Number(num) || review.rating == Number(num) + 0.5)
+          );
+        }, 0) *
+          100) /
+        product.reviews.length
+      ).toFixed(1);
+    }
     db.disconnectDb();
+    console.log("related", related);
     return {
         props: {
             product: JSON.parse(JSON.stringify(newProduct)),
+            related: JSON.parse(JSON.stringify(related)),
         },
     }
 }
