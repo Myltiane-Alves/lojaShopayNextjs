@@ -5,19 +5,19 @@ export default function Empty() {
   const { data: session } = useSession();
   return (
     <div className={styles.empty}>
-      <img src="../../../images/empty.png" alt="" />
-      <h1>Cart is empty</h1>
+      <img src="../../../imagens/empty.png" alt="" />
+      <h1>carrinho esta vazio</h1>
       {!session && (
         <button onClick={() => signIn()} className={styles.empty__btn}>
-          SIGN IN / REGISTER
+          ENTRAR / CADASTRE-SE
         </button>
       )}
       <Link href="/browse">
-        <a>
+        
           <button className={`${styles.empty__btn} ${styles.empty__btn_v2}`}>
-            SHOP NOW
+            COMPRE AGORA
           </button>
-        </a>
+        
       </Link>
     </div>
   );

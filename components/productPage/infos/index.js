@@ -11,6 +11,7 @@ import { useSession } from "next-auth/react";
 import Share from "./share";
 import Accordian from "./Accordian";
 import SimillarSwiper from "./SimillarSwiper";
+import { addToCart, updateCart } from "@/store/cartSlice";
 
 
 
@@ -24,10 +25,12 @@ export default function Infos({ product, setActiveImg }) {
     const [success, setSuccess] = useState("");
     const { cart } = useSelector((state) => ({ ...state }));
 
+    // useEffect(() => {
+    //     dispatch(hideDialog)
+    // }, [])
     useEffect(() => {
         setSize("")
         setQty(1)
-
     }, [router.query.size])
 
     useEffect(() => {
@@ -41,9 +44,72 @@ export default function Infos({ product, setActiveImg }) {
             return;
         }
         const { data }= await axios.get(
-            ``
+            `/api/product/${product._id}?style=${product.style}&size=${router.query.size}`
         );
+        if(qty > data.quantity) {
+            setError(
+                "A quantidade que você escolheu é maior do que em estoque. Experimente e reduza a quantidade"
+            );
+        } else if (data.quantity < 1) {
+            setError("Este produto está fora de estoque.")
+            return ;
+        } else {
+            let _uid = `${data._id}_${product.style}_${router.query.size}`;
+            let exist = cart.cartItems.find((p) => p._uid === _uid);
+            if(exist) {
+                let newCart = cart.cartItems.map((p) => {
+                    if (p._uid == exist._uid) {
+                      return { ...p, qty: qty };
+                    }
+                    return p;
+                  });
+                  dispatch(updateCart(newCart));
+            } else {
+                dispatch(
+                    addToCart({
+                        ...data,
+                        qty,
+                        size: data.size,
+                        _uid
+                    })
+                );
+            }
+        }
     }
+    const handleWishlist = async () => {
+        try {
+          if (!session) {
+            return signIn();
+          }
+          const { data } = await axios.put("/api/user/wishlist", {
+            product_id: product._id,
+            style: product.style,
+          });
+          dispatch(
+            showDialog({
+              header: "Product Added to Whishlist Successfully",
+              msgs: [
+                {
+                  msg: data.message,
+                  type: "success",
+                },
+              ],
+            })
+          );
+        } catch (error) {
+          dispatch(
+            showDialog({
+              header: "Whishlist Error",
+              msgs: [
+                {
+                  msg: error.response.data.message,
+                  type: "error",
+                },
+              ],
+            })
+          );
+        }
+      };
     return (
         <div className={styles.infos}>
             <div className={styles.infos__container}>
