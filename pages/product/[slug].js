@@ -11,7 +11,7 @@ import MainSwiper from "@/components/productPage/mainSwiper";
 import Infos from "@/components/productPage/infos";
 import Reviews from "@/components/productPage/reviews";
 
-export default function product({ product, products, related }) {
+export default function product({ product, related }) {
     const [activeImg, setActiveImg] = useState("");
 
     const country = {
@@ -55,9 +55,10 @@ export async function getServerSideProps(context) {
 
         .populate({ path: "category", model: Category })
         .populate({ path: "subCategories", model: SubCategory })
-        .populate({ path: "reviews", model: User })
+        .populate({ path: "reviews.reviewBy", model: User })
         .lean();
     let subProduct = product.subProducts[style];
+    console.log(product)
     let prices = subProduct.sizes
         .map((s) => {
             return s.prices;

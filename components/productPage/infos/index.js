@@ -12,7 +12,8 @@ import Share from "./share";
 import Accordian from "./Accordian";
 import SimillarSwiper from "./SimillarSwiper";
 import { addToCart, updateCart } from "@/store/cartSlice";
-
+import { hideDialog, showDialog } from "../../../store/DialogSlice";
+// import { signIn, useSession } from "next-auth/react";
 
 
 export default function Infos({ product, setActiveImg }) {
@@ -25,9 +26,9 @@ export default function Infos({ product, setActiveImg }) {
     const [success, setSuccess] = useState("");
     const { cart } = useSelector((state) => ({ ...state }));
 
-    // useEffect(() => {
-    //     dispatch(hideDialog)
-    // }, [])
+    useEffect(() => {
+        dispatch(hideDialog)
+    }, [])
     useEffect(() => {
         setSize("")
         setQty(1)
@@ -87,11 +88,11 @@ export default function Infos({ product, setActiveImg }) {
           });
           dispatch(
             showDialog({
-              header: "Product Added to Whishlist Successfully",
+              header: "Produto adicionado à lista de desejos com sucesso",
               msgs: [
                 {
                   msg: data.message,
-                  type: "success",
+                  type: "sucesso",
                 },
               ],
             })
@@ -99,7 +100,7 @@ export default function Infos({ product, setActiveImg }) {
         } catch (error) {
           dispatch(
             showDialog({
-              header: "Whishlist Error",
+              header: "Erro na lista de desejos",
               msgs: [
                 {
                   msg: error.response.data.message,
@@ -109,7 +110,7 @@ export default function Infos({ product, setActiveImg }) {
             })
           );
         }
-      };
+    };
     return (
         <div className={styles.infos}>
             <div className={styles.infos__container}>
@@ -124,13 +125,14 @@ export default function Infos({ product, setActiveImg }) {
                         style={{ color: "#FACF19" }}
                     />
                     ({product.numReviews}
-                    {product.numReviews == 1 ? " reviews" : " review"})
+                    {product.numReviews == 1 ? " review" : " reviews"})
                 </div>
                 <div className={styles.infos__price}>
-                    {!size ? <h2>{product.priceRange}</h2> : <h1>{product.price}$100</h1>}
+                    {!size ? <h2>{product.priceRange}</h2> : <h1>{product.price}R$</h1>}
+                    <p>é aqui</p>
                     {product.discount > 0 ? (
                         <h3>
-                            {size && <span>{product.priceBefore}$</span>}
+                            {size && <span>{product.priceBefore}R$</span>}
                             <span>(-{product.discount}%)</span>
                         </h3>
                     ) : (
@@ -162,7 +164,7 @@ export default function Infos({ product, setActiveImg }) {
                                         }`}
                                     onClick={() => setSize(size.size)}
                                 >
-                                    {size.size}
+                                    {size.size} 
                                 </div>
                             </Link>
                         ))}

@@ -7,6 +7,8 @@ import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import CartHeader from "@/components/cart/cartHeader";
 import Product from "@/components/cart/product";
+import ProductsSwiper from "@/components/productsSwiper";
+import { women_swiper } from "@/data/home";
 export default function cart() {
     const Router = useRouter();
     const { data: session } = useSession();
@@ -40,6 +42,7 @@ export default function cart() {
                 ) : (
                     <Empty />
                 )}
+                <ProductsSwiper products={women_swiper} />
             </div>
         </>
     )

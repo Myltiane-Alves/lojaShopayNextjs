@@ -9,7 +9,6 @@ import { useSession } from 'next-auth/react'
 
 export default function Top({ country }) {
     const { data: session } = useSession();
-    
     const [visible, setVisible] = useState(false);
     return (
         <div className={styles.top}>
@@ -17,8 +16,8 @@ export default function Top({ country }) {
                 <div></div>
                 <ul className={styles.top__list}>
                     <li className={styles.li}>
-                        {/* <img src="/imagens/brasil.png" alt="bandeira do brasil" /> */}
-                        <img src={country?.flag} alt="bandeira do brasil" />
+                        <img src="/imagens/brasil.png" alt="bandeira do brasil" />
+                        {/* <img src={country?.flag} alt="bandeira do brasil" /> */}
                         <span>{country?.name} / Real</span>
                     </li>
                     <li className={styles.li}>
